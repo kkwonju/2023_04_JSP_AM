@@ -11,6 +11,9 @@ Map<String, Object> articleRow = (Map<String, Object>) request.getAttribute("art
 <title>게시물 상세보기</title>
 </head>
 <body>
+	<div>
+		<a href="modify?id=<%=articleRow.get("id")%>">게시글 수정</a>
+	</div>
 	<h1>게시물 상세페이지</h1>
 
 	<div>

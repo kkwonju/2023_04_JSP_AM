@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-//import java.util.List;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -16,8 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.kkwo.JAM.util.DBUtil;
 import com.kkwo.JAM.util.SecSql;
 
-@WebServlet("/article/doWrite")
-public class ArticleDoWriteServlet extends HttpServlet {
+@WebServlet("/article/doModify")
+public class ArticleDoModifyServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -44,16 +44,19 @@ public class ArticleDoWriteServlet extends HttpServlet {
 			
 			String title = request.getParameter("title");
 			String body = request.getParameter("body");
+			int id = Integer.parseInt(request.getParameter("id"));
 
-			SecSql sql = SecSql.from("INSERT INTO article");
+			SecSql sql = SecSql.from("UPDATE article");
 			sql.append("SET regDate = NOW()");
 			sql.append(", title = ?", title);
-			sql.append(", `body` = ?;", body);
+			sql.append(", `body` = ?", body);
+			sql.append("WHERE id = ?;", id);
+			
 
-			int id = DBUtil.insert(conn, sql);
+			DBUtil.update(conn, sql);
 
 			response.getWriter()
-					.append(String.format("<script>alert('%d번 글이 생성되었습니다');location.replace('list');</script>", id));
+					.append(String.format("<script>alert('%d번 글이 수정되었습니다');location.replace('list');</script>", id));
 
 		} catch (SQLException e) {
 			e.printStackTrace();
