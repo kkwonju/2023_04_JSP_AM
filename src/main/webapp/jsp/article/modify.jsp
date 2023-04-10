@@ -3,7 +3,7 @@
 	pageEncoding="UTF-8"%>
 
 <%
-int id = (int) request.getAttribute("id");
+Map<String, Object> articleRow = (Map<String, Object>) request.getAttribute("articleRow");
 %>
 <!DOCTYPE html>
 <html>
@@ -15,17 +15,21 @@ int id = (int) request.getAttribute("id");
 	<div>
 		<a href="list">목록으로</a>
 	</div>
-	<h1>게시물 수정</h1>
+	<h1><%=articleRow.get("id") %>번 게시물 수정</h1>
 	<form action="doModify" accept-charset="UTF-8" name="article"
 		method='post'>
-		<input type="hidden" name="id" value="<%=id %>" />
+		<input value="<%=articleRow.get("id")%>" type="hidden" name="id"/>
 		<div>
-			<label for="title">제목</label>
-			<input type="text" name="title" id="title" placeholder="title" />
+			날짜:
+			<%=articleRow.get("regDate")%>,
 		</div>
 		<div>
-			<label for="body">내용</label>
-			<textarea type="text" name="body" id="body" placeholder="body"></textarea>
+			제목:
+			<input value="<%=articleRow.get("title")%>" type="text" name="title" />
+		</div>
+		<div>
+			내용:
+			<textarea name="body"><%=articleRow.get("body")%></textarea>
 		</div>
 		<button type="submit">수정</button>
 		<button type="reset">초기화</button>

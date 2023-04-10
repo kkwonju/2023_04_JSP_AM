@@ -51,9 +51,7 @@ public class ArticleDetailServlet extends HttpServlet {
 			Map<String, Object> articleRow = DBUtil.selectRow(conn, sql);
 
 			response.getWriter().append(articleRow.toString());
-			// 여기까지 직접 처리
 
-			// 여기는 위탁 처리
 			request.setAttribute("articleRow", articleRow); // set => jsp에서 get
 			request.getRequestDispatcher("/jsp/article/detail.jsp").forward(request, response);
 
