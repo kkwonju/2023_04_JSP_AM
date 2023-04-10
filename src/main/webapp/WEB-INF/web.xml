@@ -9,4 +9,24 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+  	<servlet>
+		<description></description>
+		<display-name>ArticleListServlet</display-name>
+		<servlet-name>ArticleListServlet</servlet-name>
+		<servlet-class>com.kkwo.JAM.servlet.ArticleListServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ArticleListServlet</servlet-name>
+		<url-pattern>/ArticleListServlet</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<description></description>
+		<display-name>ArticleDetailServlet</display-name>
+		<servlet-name>ArticleDetailServlet</servlet-name>
+		<servlet-class>com.kkwo.JAM.servlet.ArticleDetailServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ArticleDetailServlet</servlet-name>
+		<url-pattern>/ArticleDetailServlet</url-pattern>
+	</servlet-mapping>
 </web-app>
