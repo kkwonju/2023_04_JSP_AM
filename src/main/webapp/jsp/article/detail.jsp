@@ -20,7 +20,7 @@ Map<String, Object> articleRow = (Map<String, Object>) request.getAttribute("art
 	</div>
 	<div>
 		날짜:
-		<%=articleRow.get("regDate")%>,
+		<%=articleRow.get("regDate") %>,
 	</div>
 	<div>
 		제목:
@@ -33,7 +33,8 @@ Map<String, Object> articleRow = (Map<String, Object>) request.getAttribute("art
 		<a style="color: green;" href="list">리스트로 돌아가기</a>
 	</div>
 	<div>
-		<a href="modify?id=<%=articleRow.get("id")%>">게시글 수정</a>
+		<a href="modify?id=${param.id}">수정</a>
+		<a href="doDelete?id=${param.id}">삭제</a>
 	</div>
 </body>
 </html>

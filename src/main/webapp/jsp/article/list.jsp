@@ -6,6 +6,8 @@
 List<Map<String, Object>> articleRows = (List<Map<String, Object>>) request.getAttribute("articleRows");
 int cPage = (int) request.getAttribute("page");
 int totalPage = (int) request.getAttribute("totalPage");
+int limitPage = (int) request.getAttribute("limitPage");
+int limitFrom = (int) request.getAttribute("limitFrom");
 %>
 <!DOCTYPE html>
 <html>
@@ -44,29 +46,54 @@ int totalPage = (int) request.getAttribute("totalPage");
 		</tr>
 		<%
 		}
-		%>		
+		%>
 	</table>
 	<style type="text/css">
-	.page {
-		background-color: gold;
-	}
-	.page > a {
-		color: black;
-		text-decoration: none;;
-	}
-	.page > a.red {
-		color: red;
-	}
-	</style>
+.page {
+	background-color: gold;
+}
 
-	<div class="page" >
+.page>a {
+	color: black;
+	text-decoration: none;;
+}
+
+.page>a.red {
+	color: red;
+}
+</style>
+
+	<div class="page">
 		<%
-		for (int i = 1; i <= totalPage; i++) {
+		if (cPage > 1) {
 		%>
-		<a class="<%=cPage == i ? "red" : "" %>" href="list?page=<%=i%>"><%=i%></a>
+		<a href="list?page=1"> << </a>
+		<%
+		}
+		int pageSize = 5;
+		int from = cPage - pageSize;
+		if(from < 1){
+			from = 1;
+		}
+		
+		int end = cPage + pageSize;
+		if(end > totalPage){
+			end = totalPage;
+		}
+		for(int i = from; i <= end; i++){
+		%>
+		<a class="<%=cPage == i ? "red" : ""%>" href="list?page=<%=i%>"><%=i%></a>
 		<%
 		}
 		%>
+		<%
+		if (cPage < totalPage) {
+		%>
+		<a href="list?page=<%=totalPage%>"> >> </a>
+		<%
+		}
+		%>
+
 	</div>
 </body>
 </html>

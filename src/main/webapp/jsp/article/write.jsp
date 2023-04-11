@@ -21,7 +21,7 @@
 		</div>
 		<div>
 			<label for="body">내용</label>
-			<textarea type="text" name="body" id="body" placeholder="body"></textarea>
+			<textarea name="body" id="body" placeholder="body"></textarea>
 		</div>
 		<button type="submit">등록</button>
 		<button type="reset">초기화</button>

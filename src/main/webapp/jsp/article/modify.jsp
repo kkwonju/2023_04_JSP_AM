@@ -18,7 +18,7 @@ Map<String, Object> articleRow = (Map<String, Object>) request.getAttribute("art
 	<h1><%=articleRow.get("id") %>번 게시물 수정</h1>
 	<form action="doModify" accept-charset="UTF-8" name="article"
 		method='post'>
-		<input value="<%=articleRow.get("id")%>" type="hidden" name="id"/>
+		<input value="${param.id}" type="hidden" name="id"/>
 		<div>
 			날짜:
 			<%=articleRow.get("regDate")%>,

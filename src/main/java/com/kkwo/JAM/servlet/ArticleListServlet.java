@@ -48,6 +48,7 @@ public class ArticleListServlet extends HttpServlet {
 			}
 			int itemsInAPage = 10;
 			int limitFrom = (page - 1) * itemsInAPage;
+			int limitPage = 10;
 
 			SecSql sql = SecSql.from("SELECT COUNT(*) AS cnt");
 			sql.append("FROM article");
@@ -67,6 +68,8 @@ public class ArticleListServlet extends HttpServlet {
 			request.setAttribute("articleRows", articleRows); // set => jsp에서 get
 			request.setAttribute("page", page);
 			request.setAttribute("totalPage", totalPage);
+			request.setAttribute("limitPage", limitPage);
+			request.setAttribute("limitFrom", limitFrom);
 			request.getRequestDispatcher("/jsp/article/list.jsp").forward(request, response);
 
 		} catch (SQLException e) {
