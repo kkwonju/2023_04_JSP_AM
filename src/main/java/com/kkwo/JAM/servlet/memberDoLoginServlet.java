@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.kkwo.JAM.config.Config;
 import com.kkwo.JAM.util.DBUtil;
@@ -41,26 +42,27 @@ public class memberDoLoginServlet extends HttpServlet {
 
 			String loginId = request.getParameter("loginId");
 			String loginPw = request.getParameter("loginPw");
-			String name = request.getParameter("name");
 
-			SecSql sql = SecSql.from("SELECT COUNT(*) FROM `member`");
-			int cnt = DBUtil.selectRowIntValue(conn, sql);
-
-			if (cnt != 0) {
+			SecSql sql = SecSql.from("SELECT * FROM `member`");
+			sql.append("WHERE loginId = ?", loginId);
+			Map<String, Object> memberRow = DBUtil.selectRow(conn, sql);
+			if (memberRow.isEmpty()) {
 				response.getWriter().append(String
-						.format("<script>alert('이미 존재하는 아이디입니다');location.replace('join');</script>"));
+						.format("<script>alert('%s 일치하는 회원이 없습니다');location.replace('login');</script>", loginId));
+				return;
+			}
+			if (!memberRow.get("loginPw").equals(loginPw)) {
+				response.getWriter()
+						.append(String.format("<script>alert('비밀번호가 틀렸습니다');location.replace('login');</script>"));
+				return;
 			}
 
-			sql = SecSql.from("INSERT INTO `member`");
-			sql.append("SET regDate = NOW()");
-			sql.append(", loginId = ?", loginId);
-			sql.append(", loginPw = ?", loginPw);
-			sql.append(", `name` = ?;", name);
+			HttpSession session = request.getSession();
+			session.setAttribute("loginedMemberId", memberRow.get("id"));
+			session.setAttribute("loginedMemberLoginId", memberRow.get("loginId"));
 
-			int id = DBUtil.insert(conn, sql);
-
-			response.getWriter().append(
-					String.format("<script>alert('%d번 회원이 가입되었습니다');location.replace('../home/main');</script>", id));
+			response.getWriter().append(String.format("<script>alert('%s님 환영합니다');location.replace('../home/main');</script>",
+					memberRow.get("name")));
 
 		} catch (SQLException e) {
 			e.printStackTrace();

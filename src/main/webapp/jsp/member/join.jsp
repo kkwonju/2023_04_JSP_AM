@@ -61,7 +61,7 @@
 		<p>아이디</p>
 		<p>
 			<input autocomplete="off" type="text" name="loginId"
-				placeholder="loginId" />
+				placeholder="loginId" autofocus/>
 		</p>
 		<p>비밀번호</p>
 		<p>

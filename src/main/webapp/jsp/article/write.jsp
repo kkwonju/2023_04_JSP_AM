@@ -17,7 +17,7 @@
 		method='post'>
 		<div>
 			<label for="title">제목</label>
-			<input type="text" name="title" id="title" placeholder="title" />
+			<input type="text" name="title" id="title" placeholder="title" autofocus/>
 		</div>
 		<div>
 			<label for="body">내용</label>

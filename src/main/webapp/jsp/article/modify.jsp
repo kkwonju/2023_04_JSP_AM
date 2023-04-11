@@ -25,7 +25,7 @@ Map<String, Object> articleRow = (Map<String, Object>) request.getAttribute("art
 		</div>
 		<div>
 			제목:
-			<input value="<%=articleRow.get("title")%>" type="text" name="title" />
+			<input value="<%=articleRow.get("title")%>" type="text" name="title" autofocus/>
 		</div>
 		<div>
 			내용:
