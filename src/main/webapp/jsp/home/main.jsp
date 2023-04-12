@@ -25,13 +25,13 @@ int loginedMemberId = (int) request.getAttribute("loginedMemberId");
 	if (!isLogined) {
 	%>
 	<a href="../member/login">로그인</a>
+	<div>
+		<a href="../member/join">회원 가입</a>
+	</div>
 	<%
 	}
 	%>
 
-	<div>
-		<a href="../member/join">회원 가입</a>
-	</div>
 	<div>
 		<a href="../article/list">게시물 리스트</a>
 	</div>

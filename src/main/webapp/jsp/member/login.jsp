@@ -48,7 +48,7 @@
 		</p>
 		<p>비밀번호</p>
 		<p>
-			<input type="text" name="loginPw" placeholder="loginPw"
+			<input type="password" name="loginPw" placeholder="loginPw"
 				id="loginPw" />
 		</p>
 		<input type="submit" value="로그인"/>

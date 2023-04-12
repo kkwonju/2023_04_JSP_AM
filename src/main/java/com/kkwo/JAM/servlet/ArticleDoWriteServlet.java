@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.kkwo.JAM.config.Config;
 import com.kkwo.JAM.util.DBUtil;
@@ -38,12 +39,13 @@ public class ArticleDoWriteServlet extends HttpServlet {
 
 		try {
 			conn = DriverManager.getConnection(Config.getDBUrl(), Config.getDBUser(), Config.getDBPassword());
-
 			String title = request.getParameter("title");
 			String body = request.getParameter("body");
+			int memberId = (int) Integer.parseInt(request.getParameter("memberId"));
 
 			SecSql sql = SecSql.from("INSERT INTO article");
 			sql.append("SET regDate = NOW()");
+			sql.append(", memberId = ?", memberId);
 			sql.append(", title = ?", title);
 			sql.append(", `body` = ?;", body);
 

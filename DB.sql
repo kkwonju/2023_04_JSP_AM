@@ -7,6 +7,7 @@ USE `JSPAM`;
 CREATE TABLE article(
     id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
     regDate DATETIME NOT NULL,
+    memberId INT UNSIGNED NOT NULL,
     title CHAR(100) NOT NULL,
     `body` TEXT NOT NULL
 );
@@ -24,22 +25,25 @@ CREATE TABLE `member`(
 INSERT INTO article
 SET regDate = NOW(),
 title = '제목 1',
-`body` = '내용 1';
+`body` = '내용 1',
+memberId = 2;
 
 INSERT INTO article
 SET regDate = NOW(),
 title = '제목 2',
-`body` = '내용 2';
-
+`body` = '내용 2',
+memberId = 3;
 INSERT INTO article
 SET regDate = NOW(),
 title = '제목 3',
-`body` = '내용 3';
+`body` = '내용 3',
+memberId = 1;
 
 INSERT INTO article
 SET regDate = NOW(),
 title = '제목 4',
-`body` = '내용 4';
+`body` = '내용 4',
+memberId = 4;
 
 # member 테스트 데이터 생성
 INSERT INTO `member`

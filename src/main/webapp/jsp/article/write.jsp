@@ -1,6 +1,9 @@
 <%@ page import="java.util.Map"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%
+int memberId = (int) request.getAttribute("loginedMemberId");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,13 +18,14 @@
 
 	<form action="doWrite" accept-charset="UTF-8" name="article"
 		method='post'>
+		<input name="memberId" type="hidden" value="<%=memberId%>"/>
 		<div>
 			<label for="title">제목</label>
-			<input type="text" name="title" id="title" placeholder="title" autofocus/>
+			<input type="text" name="title" id="title" placeholder="title" autofocus required/>
 		</div>
 		<div>
 			<label for="body">내용</label>
-			<textarea name="body" id="body" placeholder="body"></textarea>
+			<textarea name="body" id="body" placeholder="body" required></textarea>
 		</div>
 		<button type="submit">등록</button>
 		<button type="reset">초기화</button>
