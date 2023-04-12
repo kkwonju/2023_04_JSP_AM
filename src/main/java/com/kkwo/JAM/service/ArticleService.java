@@ -2,9 +2,9 @@ package com.kkwo.JAM.service;
 
 import java.sql.Connection;
 import java.util.List;
-import java.util.Map;
 
 import com.kkwo.JAM.dao.ArticleDao;
+import com.kkwo.JAM.dto.Article;
 
 public class ArticleService {
 	private ArticleDao articleDao;
@@ -26,9 +26,10 @@ public class ArticleService {
 		return totalPage;
 	}
 
-	public List<Map<String, Object>> getForPrintArticleRows(int page) {
+	public List<Article> getForPrintArticles(int page) {
 		int itemsInAPage = getItemsInAPage();
 		int limitFrom = (page - 1) * itemsInAPage;
-		return articleDao.getForPrintArticleRows(itemsInAPage, limitFrom);
+		List<Article> articles = articleDao.getForPrintArticles(itemsInAPage, limitFrom);
+		return articles;
 	}
 }
