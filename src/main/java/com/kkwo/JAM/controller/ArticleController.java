@@ -33,12 +33,11 @@ public class ArticleController {
 			page = Integer.parseInt(request.getParameter("page"));
 		}
 		int itemsInAPage = articleService.getItemsInAPage();
-
 		int totalPage = articleService.getTotalPage();
 
 		List<Map<String, Object>> articleRows = articleService.getForPrintArticleRows(page);
 
-		request.setAttribute("articleRows", articleRows); // set => jsp에서 get
+		request.setAttribute("articleRows", articleRows);
 		request.setAttribute("page", page);
 		request.setAttribute("totalPage", totalPage);
 		request.getRequestDispatcher("/jsp/article/list.jsp").forward(request, response);
