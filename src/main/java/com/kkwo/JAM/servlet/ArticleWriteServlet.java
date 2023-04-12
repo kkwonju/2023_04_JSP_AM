@@ -27,7 +27,7 @@ public class ArticleWriteServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		if (session.getAttribute("loginedMemberId") == null) {
 			response.getWriter()
-					.append(String.format("<script>alert('로그인 후 이용해주세요');location.replace('list');</script>"));
+					.append(String.format("<script>alert('로그인 후 이용해주세요');history.back();</script>"));
 			return;
 		}
 

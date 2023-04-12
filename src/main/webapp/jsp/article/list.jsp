@@ -1,13 +1,9 @@
-<%@ page import="java.util.List"%>
-<%@ page import="java.util.Map"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
 List<Map<String, Object>> articleRows = (List<Map<String, Object>>) request.getAttribute("articleRows");
 int cPage = (int) request.getAttribute("page");
 int totalPage = (int) request.getAttribute("totalPage");
-int limitPage = (int) request.getAttribute("limitPage");
-int limitFrom = (int) request.getAttribute("limitFrom");
 %>
 <!DOCTYPE html>
 <html>
@@ -16,12 +12,8 @@ int limitFrom = (int) request.getAttribute("limitFrom");
 <title>게시물 리스트</title>
 </head>
 <body>
-	<div>
-		<a href="../home/main">메인 페이지</a>
-	</div>
-	<div>
-		<a href="write">글쓰기</a>
-	</div>
+	<%@ include file="../part/topbar.jspf"%>
+	<br />
 
 	<h1>게시물 리스트</h1>
 
@@ -72,15 +64,15 @@ int limitFrom = (int) request.getAttribute("limitFrom");
 		}
 		int pageSize = 5;
 		int from = cPage - pageSize;
-		if(from < 1){
-			from = 1;
+		if (from < 1) {
+		from = 1;
 		}
-		
+
 		int end = cPage + pageSize;
-		if(end > totalPage){
-			end = totalPage;
+		if (end > totalPage) {
+		end = totalPage;
 		}
-		for(int i = from; i <= end; i++){
+		for (int i = from; i <= end; i++) {
 		%>
 		<a class="<%=cPage == i ? "red" : ""%>" href="list?page=<%=i%>"><%=i%></a>
 		<%
