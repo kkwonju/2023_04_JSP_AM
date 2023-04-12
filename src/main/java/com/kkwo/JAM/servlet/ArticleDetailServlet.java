@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.kkwo.JAM.config.Config;
 import com.kkwo.JAM.util.DBUtil;
@@ -39,9 +40,28 @@ public class ArticleDetailServlet extends HttpServlet {
 		try {
 			conn = DriverManager.getConnection(Config.getDBUrl(), Config.getDBUser(), Config.getDBPassword());
 
+			HttpSession session = request.getSession();
+			boolean isLogined = false; // false로 가정
+			int loginedMemberId = -1;
+			Map<String, Object> memberRow = null;
+
+			if (session.getAttribute("loginedMemberId") != null) {
+				isLogined = true;
+				loginedMemberId = (int) session.getAttribute("loginedMemberId");
+				
+				SecSql sql = SecSql.from("SELECT * FROM `member`");
+				sql.append("WHERE id = ?", loginedMemberId);
+				
+				memberRow = DBUtil.selectRow(conn, sql);
+			}
+
+			request.setAttribute("isLogined", isLogined);
+			request.setAttribute("loginedMemberId", loginedMemberId);
+			request.setAttribute("memberRow", memberRow);
+			
 			int id = Integer.parseInt(request.getParameter("id"));
 
-			SecSql sql = SecSql.from("SELECT a.id,a.regDate,a.title,a.body,m.name AS 'writer'");
+			SecSql sql = SecSql.from("SELECT a.*,m.name AS 'writer'");
 			sql.append("FROM article AS a");
 			sql.append("INNER JOIN `member` AS m");
 			sql.append("ON a.memberId = m.id");

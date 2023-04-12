@@ -12,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.kkwo.JAM.config.Config;
 import com.kkwo.JAM.util.DBUtil;
@@ -38,12 +39,31 @@ public class ArticleDoModifyServlet extends HttpServlet {
 
 		try {
 			conn = DriverManager.getConnection(Config.getDBUrl(), Config.getDBUser(), Config.getDBPassword());
+			HttpSession session = request.getSession();
+
+			if (session.getAttribute("loginedMemberId") == null) {
+				response.getWriter().append(
+						String.format("<script>alert('로그인 후 이용해주세요');location.replace('../member/login');</script>"));
+				return;
+			}
+			
+			int memberId = (int) session.getAttribute("loginedMemberId");
+			int id = Integer.parseInt(request.getParameter("id"));
+			
+			SecSql sql = SecSql.from("SELECT *");
+			sql.append("FROM article");
+			sql.append("WHERE id = ?", id);
+
+			Map<String, Object> articleRow = DBUtil.selectRow(conn, sql);
+			if (!articleRow.get("memberId").equals(memberId)) {
+				response.getWriter().append(String.format("<script>alert('수정 권한이 없습니다');history.back();</script>"));
+				return;
+			}
 
 			String title = request.getParameter("title");
 			String body = request.getParameter("body");
-			int id = Integer.parseInt(request.getParameter("id"));
 
-			SecSql sql = SecSql.from("UPDATE article");
+			sql = SecSql.from("UPDATE article");
 			sql.append("SET regDate = NOW()");
 			sql.append(", title = ?", title);
 			sql.append(", `body` = ?", body);

@@ -44,21 +44,18 @@ public class ArticleModifyServlet extends HttpServlet {
 			HttpSession session = request.getSession();
 			
 			if(session.getAttribute("loginedMemberId") == null) {
-				response.getWriter().append(String.format("<script>alert('로그인 후 이용해주세요');history.back();</script>"));
+				response.getWriter().append(String.format("<script>alert('로그인 후 이용해주세요');location.replace('../member/login');</script>"));
 				return;
 			}
 			int memberId = (int) session.getAttribute("loginedMemberId");
 			int id = Integer.parseInt(request.getParameter("id"));
 
-			SecSql sql = SecSql.from("SELECT COUNT(*)");
-			sql.append("FROM article AS a");
-			sql.append("INNER JOIN `member` AS m");
-			sql.append("ON a.memberId = m.id");
-			sql.append("WHERE a.memberId = ?", memberId);
-			sql.append("AND a.id = ?", id);
+			SecSql sql = SecSql.from("SELECT *");
+			sql.append("FROM article");
+			sql.append("WHERE id = ?", id);
 
-			int cnt = DBUtil.selectRowIntValue(conn, sql);
-			if (cnt == 0) {
+			Map<String, Object> articleRow = DBUtil.selectRow(conn, sql);
+			if (!articleRow.get("memberId").equals(memberId)) {
 				response.getWriter().append(String.format("<script>alert('수정 권한이 없습니다');history.back();</script>"));
 				return;
 			}
@@ -67,7 +64,7 @@ public class ArticleModifyServlet extends HttpServlet {
 			sql.append("FROM article");
 			sql.append("WHERE id = ?;", id);
 
-			Map<String, Object> articleRow = DBUtil.selectRow(conn, sql);
+			articleRow = DBUtil.selectRow(conn, sql);
 
 			response.getWriter().append(articleRow.toString());
 

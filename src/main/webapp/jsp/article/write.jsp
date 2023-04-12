@@ -15,7 +15,6 @@ int memberId = (int) request.getAttribute("loginedMemberId");
 		<a href="list">뒤로 가기</a>
 	</div>
 	<h1>게시물 작성</h1>
-	<%@ include file="../part/topbar.jspf" %>
 
 	<form action="doWrite" accept-charset="UTF-8" name="article"
 		method='post'>
